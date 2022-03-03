@@ -1927,19 +1927,33 @@ vector<vector<string>> readIrisdata(const char* fname)
     ifstream file(fname);
     string line = "";
 
-    while(getline(file,line))
+    while (getline(file, line))
     {
-        if(line!="")
+        const std::string s = ", ";
+        const std::string t = " ";
+
+        std::string::size_type n = 0;
+        while ((n = line.find(s, n)) != std::string::npos)
         {
-            for(int i=0;i+1<line.length();i++)
-            {
-                if(line[i]==',' && line[i+1]==',')
-                {
-                    line.insert(i+1," ");
-                }
-            }
-            data.push_back(line);
+            line.replace(n, s.size(), t);
+            n += t.size();
         }
+        if (line[line.length() - 1] == ',')
+        {
+            line = line + ',';
+
+        }
+        const std::string s1 = ",,";
+        const std::string t1 = ",nan,";
+
+        std::string::size_type n1 = 0;
+        while ((n1 = line.find(s1, n1)) != std::string::npos)
+        {
+            line.replace(n1, s1.size(), t1);
+            n1 += t1.size();
+        }
+
+        data.push_back(line);
 
     }
 
