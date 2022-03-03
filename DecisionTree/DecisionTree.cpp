@@ -203,21 +203,24 @@ double cal_gini_impurity(const int& j,const int& index,set<string>& targets)
 }
 
 template<typename T>
-void column_drop(vector<int> drops,vector<vector<T>>& tdata)
+void column_drop(vector<int> drops, vector<vector<T>>& tdata)
 {
-    sort(drops.begin(),drops.end());
-    for(int k=0;k<drops.size();k++)
+    sort(drops.begin(), drops.end());
+    for (int k = 0; k < drops.size(); k++)
     {
-        if(k>0)
+        if (k > 0)
         {
-            drops[k] = drops[k]-1;
+            drops[k] = drops[k] - k;
+
         }
-        for(int i=0;i<tdata.size();i++)
+
+        for (int i = 0; i < tdata.size(); i++)
         {
-            tdata[i].erase(tdata[i].begin()+drops[k]);
+            tdata[i].erase(tdata[i].begin() + drops[k]);
         }
 
     }
+
 }
 
 void header_col_Drop(vector<int> drops,vector<string>& header)
